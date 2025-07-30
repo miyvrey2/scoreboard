@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Game;
 use App\Models\Player;
+use App\Models\Score;
 use App\Models\Skill;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,14 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Player::factory(10)->create();
+        // Create users
+        $players = Player::factory(10)->create();
 
-        Game::create(['name' => 'darts']);
-        Game::create(['name' => 'table tennis']);
-        Game::create(['name' => 'pool']);
+        // Create skills
+        $reactivity = Skill::create(['name' => 'reactivity']);
+        $precision = Skill::create(['name' => 'precision']);
+        $strategy = Skill::create(['name' => 'strategy']);
 
-        Skill::create(['name' => 'reactivity']);
-        Skill::create(['name' => 'presision']);
-        Skill::create(['name' => 'strategy']);
+        // Create games and attach skills
+        Game::create(['name' => 'darts'])->skills()->attach([$precision, $strategy]);
+        Game::create(['name' => 'table tennis'])->skills()->attach([$precision, $reactivity]);
+        Game::create(['name' => 'pool'])->skills()->attach([$precision, $strategy]);
+
+        // Create scores and use the existing players and games
+        Score::factory(100)
+             ->recycle([$players, Game::all()])
+             ->create();
     }
 }
