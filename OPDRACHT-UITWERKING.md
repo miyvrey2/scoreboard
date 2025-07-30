@@ -22,6 +22,7 @@ Het vierde model Score en legt relaties tussen de spelers, spellen en natuurlijk
 De relaties heb ik nu gelegd en de factories zijn aangemaakt. Tijdens het migreren worden alle tabellen en relaties aangemaakt.
 
 ## Stap 3: Maak een ScoreboardService
+### 3.1
 Nu ga ik een service maken die de hoogste score per vaardigheid ophaalt en bij welke speler dit hoort. Hiervoor maak ik een service class aan. 
 De reden voor een service class is dat ik deze (later) kan implementeren in een commando of controller, en dat ik deze kan testen zonder dat ik een controller of commando hoef te maken.
 
@@ -38,4 +39,8 @@ Daarnaast maak ik een werking aan in de service class die de scores per speler b
 
 Dit lijkt goed te werken, al is dit enkel de happy flow. Gezien de tijd ga ik even kijken wat het handigste is.
 
+### 3.2
 Note: En daarom testen we: ik had een cleanup van mn code gedaan maar dat brak natuurlijk de test. Opgelost.
+
+### 3.3
+Readme met uitleg hoe we dit opstarten + een commando zodat we de scores kunnen ophalen en tonen in de console.
