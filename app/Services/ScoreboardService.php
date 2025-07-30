@@ -15,7 +15,6 @@ class ScoreboardService
     public static function getHighestScoresPerSkill(): array
     {
         $results = [];
-        $playerScores = [];
 
         // Eager load games and scores with players to minimize queries
         $skills = Skill::with('games.scores.player')->get();
@@ -26,6 +25,10 @@ class ScoreboardService
         }
 
         foreach ($skills as $skill) {
+
+            // reset the player scores for each skill
+            $playerScores = [];
+
             foreach ($skill->games as $game) {
                 foreach ($game->scores as $score) {
 

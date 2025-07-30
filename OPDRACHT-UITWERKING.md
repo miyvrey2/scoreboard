@@ -37,3 +37,5 @@ Daarnaast maak ik een werking aan in de service class die de scores per speler b
 - return de lijst met hoogste scores per skill
 
 Dit lijkt goed te werken, al is dit enkel de happy flow. Gezien de tijd ga ik even kijken wat het handigste is.
+
+Note: En daarom testen we: ik had een cleanup van mn code gedaan maar dat brak natuurlijk de test. Opgelost.
