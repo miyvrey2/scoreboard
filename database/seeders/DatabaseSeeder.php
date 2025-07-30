@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create users
+        // Create players
         $players = Player::factory(10)->create();
 
         // Create skills
