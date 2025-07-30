@@ -44,3 +44,8 @@ Note: En daarom testen we: ik had een cleanup van mn code gedaan maar dat brak n
 
 ### 3.3
 Readme met uitleg hoe we dit opstarten + een commando zodat we de scores kunnen ophalen en tonen in de console.
+
+
+## Stap 4: Maak een ScoreboardService met een methode een score berekening om te zien wat de score is per speler
+In noodvaard afgemaakt, hopelijk nog op tijd. De service class is uitgebreid met een scoreberekening per speler
+dit is ook via een commando weer te testen.

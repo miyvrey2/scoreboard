@@ -15,7 +15,10 @@ class ScoreboardServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_calculates_highest_score_per_skill()
+    /**
+     * @return array
+     */
+    public function setupData(): array
     {
         // Create players
         $players = Player::factory(10)->create();
@@ -34,6 +37,14 @@ class ScoreboardServiceTest extends TestCase
         $darts->skills()->attach([$reactivity]);
         $tableTennis->skills()->attach([$precision]);
         $pool->skills()->attach([$strategy]);
+
+        return [$players, $darts, $tableTennis, $pool];
+    }
+
+    public function test_it_calculates_highest_score_per_skill()
+    {
+        // Set up the data for the test
+        [$players, $darts, $tableTennis, $pool] = $this->setupData();
 
         // Create specific scores for players in each game
         Score::create(['game_id' => $darts->id, 'player_id' => $players[0]->id, 'score' => 80]);
@@ -63,5 +74,26 @@ class ScoreboardServiceTest extends TestCase
         $this->assertEquals('strategy', $highestScores[2]['skill']);
         $this->assertEquals($players[2]->name, $highestScores[2]['player']);
         $this->assertEquals(92, $highestScores[2]['score']);
+    }
+
+    public function test_it_gets_highest_scores_of_player()
+    {
+        // Set up the data for the test
+        [$players, $darts, $tableTennis, $pool] = $this->setupData();
+
+        // Create scores for a specific player
+        Score::create(['game_id' => $darts->id, 'player_id' => $players[0]->id, 'score' => 80]);
+        Score::create(['game_id' => $tableTennis->id, 'player_id' => $players[0]->id, 'score' => 70]);
+        Score::create(['game_id' => $pool->id, 'player_id' => $players[0]->id, 'score' => 88]);
+
+        // Get the highest scores of the player
+        $highestScores = ScoreboardService::getHighestScoresOfPlayer($players[0]->id);
+
+        // Assert that the highest scores are calculated correctly
+        $this->assertCount(2, $highestScores);
+
+        $this->assertEquals(80, $highestScores['skills']['reactivity']);
+        $this->assertEquals(70, $highestScores['skills']['precision']);
+        $this->assertEquals(88, $highestScores['skills']['strategy']);
     }
 }

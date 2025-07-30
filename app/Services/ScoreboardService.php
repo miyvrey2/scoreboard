@@ -54,4 +54,37 @@ class ScoreboardService
 
         return $results;
     }
+
+    public static function getHighestScoresOfPlayer($player_id): array
+    {
+        // Eager load scores and their related games and skills for the player
+        $player = Player::with('scores.game.skills')->find($player_id);
+
+        if (!$player) {
+            return [];
+        }
+
+        $skillScores = [];
+
+        foreach ($player->scores as $score) {
+            foreach ($score->game->skills as $skill) {
+                $skillId = $skill->id;
+                $skillScores[$skillId] = $skillScores[$skillId] ?? 0;
+                $skillScores[$skillId] = ($skillScores[$skillId] > $score->score) ? $skillScores[$skillId] : $score->score;
+            }
+        }
+
+        // Sort the scores to find the highest for this skill
+        arsort($skillScores);
+
+        // Write down the skill scores for this user
+        $results = [
+            'player' => $player->name,
+            'skills' => collect($skillScores)->mapWithKeys(function ($val, $skillId) {
+                return [Skill::find($skillId)->name => $val];
+            })->toArray(),
+        ];
+
+        return $results;
+    }
 }
