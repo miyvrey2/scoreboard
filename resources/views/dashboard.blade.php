@@ -59,7 +59,8 @@
                         </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach($highScores['player']['skills'] as $skill => $score)
+                        @isset($highScores['player']['skills'])
+                            @forelse($highScores['player']['skills'] as $skill => $score)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                                     {{ $skill }}
@@ -68,7 +69,14 @@
                                     {{ $score }}
                                 </td>
                             </tr>
-                        @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
+                                        No high scores found for player 1.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        @endisset
                         </tbody>
                     </table>
                 </div>
