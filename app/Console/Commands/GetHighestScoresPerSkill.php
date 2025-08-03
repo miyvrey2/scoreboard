@@ -36,10 +36,6 @@ class GetHighestScoresPerSkill extends Command
 
         $this->info('Highest scores per skill:');
 
-        foreach ($highestScores as $score) {
-            $this->info("Skill: {$score['skill']}, Player: {$score['player']}, Score: {$score['score']}");
-        }
-
-        $this->info('Done.');
+        $this->table(["Skill", "Player", "Score"], array_values($highestScores));
     }
 }
