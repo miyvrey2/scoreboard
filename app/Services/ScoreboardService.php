@@ -36,19 +36,18 @@ class ScoreboardService
                     $playerId = $score->player->id;
                     $playerScores[$playerId] = $playerScores[$playerId] ?? 0;
                     $playerScores[$playerId] = ($playerScores[$playerId] > $score->score) ? $playerScores[$playerId] : $score->score;
+                    $topScore = $score;
                 }
             }
 
             // Sort the scores to find the highest for this skill
             arsort($playerScores);
-            $topPlayerId = array_key_first($playerScores);
-            $topScore = $playerScores[$topPlayerId];
 
             // Write down the result for this skill
             $results[] = [
                 'skill' => $skill->name,
-                'player' => Player::find($topPlayerId)->name,
-                'score' => $topScore
+                'player' => $topScore->player->name,
+                'score' => $topScore->score
             ];
         }
 
@@ -73,9 +72,9 @@ class ScoreboardService
 
         foreach ($player->scores as $score) {
             foreach ($score->game->skills as $skill) {
-                $skillId = $skill->id;
-                $skillScores[$skillId] = $skillScores[$skillId] ?? 0;
-                $skillScores[$skillId] = ($skillScores[$skillId] > $score->score) ? $skillScores[$skillId] : $score->score;
+                $key = $skill->name;
+                $skillScores[$key] = $skillScores[$key] ?? 0;
+                $skillScores[$key] = ($skillScores[$key] > $score->score) ? $skillScores[$key] : $score->score;
             }
         }
 
@@ -85,9 +84,7 @@ class ScoreboardService
         // Write down the skill scores for this user
         $results = [
             'player' => $player->name,
-            'skills' => collect($skillScores)->mapWithKeys(function ($val, $skillId) {
-                return [Skill::find($skillId)->name => $val];
-            })->toArray(),
+            'skills' => $skillScores
         ];
 
         return $results;
