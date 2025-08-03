@@ -1,4 +1,5 @@
 # Scoreboard
+A simple scoreboard application built with Laravel, designed to track and display the highest scores per skill and per player. Build as requested in the assignment file [OPDRACHT.md](OPDRACHT.md). Thoughts and considerations are documented in the assignment elaboration file [OPDRACHT-UITWERKING.md](OPDRACHT-UITWERKING.md).
 
 ## Installation
 1. Clone the repository:
@@ -21,4 +22,11 @@ To see the highest scores per skill, run the following command:
 ```php artisan scores:get-highest-per-skill```
 
 To see the scores per player, run:
-```php artisan scores:get-highest-per-player```
+```php artisan scores:get-highest-per-player {player_id}```
+
+## Testing
+Run the tests using:
+```php artisan test```
+
+## Improvements
+in the branch `improvements`, I have added a few improvements to the original code to further elaborate on the assignment. 
