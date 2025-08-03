@@ -60,20 +60,20 @@ class ScoreboardServiceTest extends TestCase
         // Assert that the highest scores are calculated correctly
         $this->assertCount(3, $highestScores);
 
+        // Check strategy skill
+        $this->assertEquals('strategy', $highestScores[0]['skill']);
+        $this->assertEquals($players[2]->name, $highestScores[0]['player']);
+        $this->assertEquals(92, $highestScores[0]['score']);
+
         // Check reactivity skill
-        $this->assertEquals('reactivity', $highestScores[0]['skill']);
-        $this->assertEquals($players[1]->name, $highestScores[0]['player']);
-        $this->assertEquals(90, $highestScores[0]['score']);
+        $this->assertEquals('reactivity', $highestScores[1]['skill']);
+        $this->assertEquals($players[1]->name, $highestScores[1]['player']);
+        $this->assertEquals(90, $highestScores[1]['score']);
 
         // Check precision skill
-        $this->assertEquals('precision', $highestScores[1]['skill']);
-        $this->assertEquals($players[2]->name, $highestScores[1]['player']);
-        $this->assertEquals(85, $highestScores[1]['score']);
-
-        // Check strategy skill
-        $this->assertEquals('strategy', $highestScores[2]['skill']);
+        $this->assertEquals('precision', $highestScores[2]['skill']);
         $this->assertEquals($players[2]->name, $highestScores[2]['player']);
-        $this->assertEquals(92, $highestScores[2]['score']);
+        $this->assertEquals(85, $highestScores[2]['score']);
     }
 
     public function test_it_gets_highest_scores_of_player()
