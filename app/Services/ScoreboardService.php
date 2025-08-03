@@ -52,6 +52,11 @@ class ScoreboardService
             ];
         }
 
+        // sort by the key 'score' in descending order
+        usort($results, function ($a, $b) {
+            return $b['score'] <=> $a['score'];
+        });
+
         return $results;
     }
 
