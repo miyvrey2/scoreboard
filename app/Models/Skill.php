@@ -19,4 +19,9 @@ class Skill extends Model
     {
         return $this->belongsToMany(Game::class);
     }
+
+    public function scores()
+    {
+        return $this->hasManyThrough(Score::class, Game::class);
+    }
 }
